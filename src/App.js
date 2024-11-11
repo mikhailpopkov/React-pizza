@@ -1,13 +1,17 @@
 import React from "react";
+
 import "./scss/app.scss";
+
 import Header from "./components/Headeer";
 import Categories from "./components/Categories";
 import Sort from "./components/Sort";
 import PizzaBlock from "./components/PizzaBlock";
+import SkeletonHome from "./components/PizzaBlock/SkeletonHome";
 
 function App() {
 
   const [items, setItems] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     fetch('https://672b0125976a834dd0253071.mockapi.io/items').then(
