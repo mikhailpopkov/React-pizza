@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Search.module.scss"
 
-function Search () {
+function Search ({searchValue, setSearchValue}) {
 
     return (
         <div className={styles.wrapper}>
