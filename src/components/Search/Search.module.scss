@@ -1,0 +1,38 @@
+.wrapper {
+    position: relative;
+    left: -100px;
+
+    .input {
+        padding: 10px 25px 10px 40px;
+        outline: none;
+        border: 1px solid #EB5A1E;
+        border-radius: 10px;
+        font-size: 16px;
+        width: 300px;
+    }
+
+    .searchIcon {
+        opacity: .5;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 10px;
+        transition: all .3s ease-in-out;
+        cursor: pointer;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    .closeIcon {
+        position: absolute;
+        opacity: .5;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        transition: all .3s ease-in-out;
+        cursor: pointer;
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
