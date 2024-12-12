@@ -4,6 +4,7 @@ import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import SkeletonHome from "../components/PizzaBlock/SkeletonHome";
+import Pagination from "../components/Pagination";
 
 function Home({searchValue}) {
   const [items, setItems] = React.useState([]);
@@ -13,6 +14,7 @@ function Home({searchValue}) {
     name: 'популярности (сначала популярные)',
     techName: 'rating',
   });
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   React.useEffect(() => {
     setLoading(true);
@@ -42,6 +44,7 @@ function Home({searchValue}) {
           ? [...new Array(6)].map((_, index) => <SkeletonHome key={index} />)
           : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
       </div>
+      <Pagination setCurrentPage={setCurrentPage} />
     </>
   );
 }
