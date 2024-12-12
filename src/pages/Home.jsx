@@ -24,13 +24,13 @@ function Home({searchValue}) {
     const orderUrl = sortUrl.includes('-') ? `order=desc` : `order=asc`;
     const searchUrl = searchValue ? `search=${searchValue}` : '';
 
-    fetch(`https://672b0125976a834dd0253071.mockapi.io/items?${categoryUrlId}&${sortUrl.replace('-', '')}&${orderUrl}&${searchUrl}`).then((array) =>
+    fetch(`https://672b0125976a834dd0253071.mockapi.io/items?page=${currentPage}&limit=4${categoryUrlId}&${sortUrl.replace('-', '')}&${orderUrl}&${searchUrl}`).then((array) =>
       array.json().then((array) => {
         setItems(array);
         setLoading(false);
       })
     );
-  }, [categoryId, sortType, searchValue]);
+  }, [categoryId, sortType, searchValue, currentPage]);
 
   return (
     <>
@@ -44,7 +44,7 @@ function Home({searchValue}) {
           ? [...new Array(6)].map((_, index) => <SkeletonHome key={index} />)
           : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
       </div>
-      <Pagination setCurrentPage={setCurrentPage} />
+      <Pagination setCurrentPage={(num) => setCurrentPage(num)} />
     </>
   );
 }
