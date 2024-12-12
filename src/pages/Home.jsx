@@ -5,7 +5,7 @@ import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import SkeletonHome from "../components/PizzaBlock/SkeletonHome";
 
-function Home() {
+function Home({searchValue}) {
   const [items, setItems] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
@@ -20,14 +20,15 @@ function Home() {
     const categoryUrlId = categoryId > 0 ? `category=${categoryId}` : '';
     const sortUrl = `sortBy=${sortType.techName}`;
     const orderUrl = sortUrl.includes('-') ? `order=desc` : `order=asc`;
+    const searchUrl = searchValue ? `search=${searchValue}` : '';
 
-    fetch(`https://672b0125976a834dd0253071.mockapi.io/items?${categoryUrlId}&${sortUrl.replace('-', '')}&${orderUrl}`).then((array) =>
+    fetch(`https://672b0125976a834dd0253071.mockapi.io/items?${categoryUrlId}&${sortUrl.replace('-', '')}&${orderUrl}&${searchUrl}`).then((array) =>
       array.json().then((array) => {
         setItems(array);
         setLoading(false);
       })
     );
-  }, [categoryId, sortType]);
+  }, [categoryId, sortType, searchValue]);
 
   return (
     <>
