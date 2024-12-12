@@ -26,13 +26,23 @@ body {
   &__items {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 10px;
+    @media (max-width: 1240px) {
+      gap: 20px;
+    }
+    @media (max-width: 767px) {
+      gap: 10px;
+    }
   }
 
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 1480px) {
+      flex-direction: column;
+      gap: 15px;
+    }
   }
 }
 
