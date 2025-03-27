@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
@@ -8,36 +9,49 @@ import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
 import axios from "axios";
 
+import { setCategoryId } from "../redux/slices/filterSlice";
+
 function Home() {
+  const dispatch = useDispatch();
+  const categoryId = useSelector((state) => state.filterSlice.categoryId);
+
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
-  const [categoryId, setCategoryId] = React.useState(0);
   const [sortType, setSortType] = React.useState({
-    name: 'популярности (сначала популярные)',
-    techName: 'rating',
+    name: "популярности (сначала популярные)",
+    techName: "rating",
   });
   const [currentPage, setCurrentPage] = React.useState(1);
 
   React.useEffect(() => {
     setLoading(true);
 
-    const categoryUrlId = categoryId > 0 ? `category=${categoryId}` : '';
+    const categoryUrlId = categoryId > 0 ? `category=${categoryId}` : "";
     const sortUrl = `sortBy=${sortType.techName}`;
-    const orderUrl = sortUrl.includes('-') ? `order=desc` : `order=asc`;
-    const searchUrl = searchValue ? `search=${searchValue}` : '';
+    const orderUrl = sortUrl.includes("-") ? `order=desc` : `order=asc`;
+    const searchUrl = searchValue ? `search=${searchValue}` : "";
 
-    axios.get(`https://672b0125976a834dd0253071.mockapi.io/items?page=${currentPage}&limit=4&${categoryUrlId}&${sortUrl.replace('-', '')}&${orderUrl}&${searchUrl}`)
-    .then((res) => {
-      setItems(res.data);
-      setLoading(false);
-    })
+    axios
+      .get(
+        `https://672b0125976a834dd0253071.mockapi.io/items?page=${currentPage}&limit=4&${categoryUrlId}&${sortUrl.replace(
+          "-",
+          ""
+        )}&${orderUrl}&${searchUrl}`
+      )
+      .then((res) => {
+        setItems(res.data);
+        setLoading(false);
+      });
   }, [categoryId, sortType, searchValue, currentPage]);
 
   return (
     <>
       <div className="content__top">
-        <Categories value={categoryId} onClickCategory={(id) => setCategoryId(id)} />
+        <Categories
+          value={categoryId}
+          onClickCategory={(id) => dispatch(setCategoryId(id))}
+        />
         <Sort value={sortType} onChangeSort={(id) => setSortType(id)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
