@@ -1,6 +1,6 @@
 import React from "react";
-
 import { useSelector, useDispatch } from "react-redux";
+
 import { setCategoryId, setSortType } from "../redux/slices/filterSlice";
 
 import Categories from "../components/Categories";
@@ -9,6 +9,9 @@ import PizzaBlock from "../components/PizzaBlock";
 import SkeletonHome from "../components/PizzaBlock/SkeletonHome";
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
+import axios from "axios";
+
+import { setCategoryId } from "../redux/slices/filterSlice";
 
 function Home() {
   const dispatch = useDispatch();
@@ -27,17 +30,22 @@ function Home() {
   React.useEffect(() => {
     setLoading(true);
 
-    const categoryUrlId = categoryId > 0 ? `category=${categoryId}` : '';
+    const categoryUrlId = categoryId > 0 ? `category=${categoryId}` : "";
     const sortUrl = `sortBy=${sortType.techName}`;
-    const orderUrl = sortUrl.includes('-') ? `order=desc` : `order=asc`;
-    const searchUrl = searchValue ? `search=${searchValue}` : '';
+    const orderUrl = sortUrl.includes("-") ? `order=desc` : `order=asc`;
+    const searchUrl = searchValue ? `search=${searchValue}` : "";
 
-    fetch(`https://672b0125976a834dd0253071.mockapi.io/items?page=${currentPage}&limit=4&${categoryUrlId}&${sortUrl.replace('-', '')}&${orderUrl}&${searchUrl}`).then((array) =>
-      array.json().then((array) => {
-        setItems(array);
+    axios
+      .get(
+        `https://672b0125976a834dd0253071.mockapi.io/items?page=${currentPage}&limit=4&${categoryUrlId}&${sortUrl.replace(
+          "-",
+          ""
+        )}&${orderUrl}&${searchUrl}`
+      )
+      .then((res) => {
+        setItems(res.data);
         setLoading(false);
-      })
-    );
+      });
   }, [categoryId, sortType, searchValue, currentPage]);
 
   return (
