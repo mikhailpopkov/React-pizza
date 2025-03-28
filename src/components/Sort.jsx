@@ -1,7 +1,6 @@
 import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setSortType } from "../redux/slices/filterSlice";
 
 function Sort({ onChangeSort }) {
   const dispatch = useDispatch();

@@ -11,7 +11,6 @@ import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
 import axios from "axios";
 
-import { setCategoryId } from "../redux/slices/filterSlice";
 
 function Home() {
   const dispatch = useDispatch();
@@ -21,10 +20,6 @@ function Home() {
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
-  // const [sortType, setSortType] = React.useState({
-  //   name: 'популярности (сначала популярные)',
-  //   techName: 'rating',
-  // });
   const [currentPage, setCurrentPage] = React.useState(1);
 
   React.useEffect(() => {
