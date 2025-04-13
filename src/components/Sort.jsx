@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 function Sort({ onChangeSort }) {
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filter.sortType);
+  const sortRef = React.useRef();
 
   const [showPopup, setShowPopup] = React.useState(false);
   const sortList =[{name:'популярности (сначала популярные)', techName: 'rating'},
@@ -20,8 +21,23 @@ function Sort({ onChangeSort }) {
     setShowPopup(false);
   }
 
+  React.useEffect(() => {
+    let closeSortBlock = (event) => {
+      let arrElem = event.composedPath();
+      if (!arrElem.includes(sortRef.current)) {
+        setShowPopup(false);
+      }
+    }
+
+    document.body.addEventListener('click', closeSortBlock);
+
+    return () => {
+      document.body.removeEventListener('click', closeSortBlock);
+    }
+  }, [])
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
