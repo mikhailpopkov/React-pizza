@@ -2,24 +2,21 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 
-import { setCategoryId, setSortType } from "../redux/slices/filterSlice";
-import { setItems, fetchPizzas } from "../redux/slices/pizzasSlice";
+import { selectFilter, setCategoryId, setSortType } from "../redux/slices/filterSlice";
+import { fetchPizzas, selectPizzas } from "../redux/slices/pizzasSlice";
 
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import SkeletonHome from "../components/PizzaBlock/SkeletonHome";
 import Pagination from "../components/Pagination";
-import { SearchContext } from "../App";
 
 
 function Home() {
   const dispatch = useDispatch();
-  const categoryId = useSelector((state) => state.filter.categoryId);
-  const sortType = useSelector((state) => state.filter.sortType);
-  const {items, status} = useSelector((state) => state.pizzas);
+  const { categoryId, sortType, searchValue } = useSelector(selectFilter);
+  const {items, status} = useSelector(selectPizzas);
 
-  const { searchValue } = React.useContext(SearchContext);
   const [currentPage, setCurrentPage] = React.useState(1);
 
   const fetchFunc =  async () => {
