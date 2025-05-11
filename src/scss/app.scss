@@ -33,6 +33,22 @@ body {
     @media (max-width: 767px) {
       gap: 10px;
     }
+
+    &--error {
+      text-align: center;
+      margin: 0 0 100px;
+      h2 {
+        margin: 0 0 30px;
+      }
+
+      .content {
+        &__items {
+          &-text {
+            font-size: 20px;
+          }
+        }
+      }
+    }
   }
 
   &__top {
