@@ -17,6 +17,9 @@ function Home() {
   const { categoryId, sortType, searchValue } = useSelector(selectFilter);
   const {items, status} = useSelector(selectPizzas);
 
+  const skeletons = [...new Array(6)].map((_, index) => <SkeletonHome key={index} />);
+  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+
   const [currentPage, setCurrentPage] = React.useState(1);
 
   const fetchFunc =  async () => {
@@ -53,8 +56,8 @@ function Home() {
       }
       <div className="content__items">
         {status === 'loading'
-          ? [...new Array(6)].map((_, index) => <SkeletonHome key={index} />)
-          : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+          ? skeletons
+          : pizzas}
       </div>
       <Pagination setCurrentPage={(num) => setCurrentPage(num)} />
     </>
