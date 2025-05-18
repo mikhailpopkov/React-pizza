@@ -12,13 +12,13 @@ import SkeletonHome from "../components/PizzaBlock/SkeletonHome";
 import Pagination from "../components/Pagination";
 
 
-function Home() {
+const Home: React.FC = () => {
   const dispatch = useDispatch();
   const { categoryId, sortType, searchValue } = useSelector(selectFilter);
   const {items, status} = useSelector(selectPizzas);
 
   const skeletons = [...new Array(6)].map((_, index) => <SkeletonHome key={index} />);
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 
   const [currentPage, setCurrentPage] = React.useState(1);
 
@@ -27,7 +27,7 @@ function Home() {
     const sortUrl = `sortBy=${sortType.techName}`;
     const orderUrl = sortUrl.includes("-") ? `order=desc` : `order=asc`;
     const searchUrl = searchValue ? `search=${searchValue}` : "";
-
+    // @ts-ignore
       dispatch(fetchPizzas({
         categoryUrlId,
         sortUrl,
@@ -44,8 +44,8 @@ function Home() {
   return (
     <>
       <div className="content__top">
-        <Categories value={categoryId} onClickCategory={(id) => dispatch(setCategoryId(id))} />
-        <Sort onChangeSort={(id) => dispatch(setSortType(id))} />
+        <Categories value={categoryId} onClickCategory={(id: number) => dispatch(setCategoryId(id))} />
+        <Sort onChangeSort={(id: number) => dispatch(setSortType(id))} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {
@@ -59,7 +59,7 @@ function Home() {
           ? skeletons
           : pizzas}
       </div>
-      <Pagination setCurrentPage={(num) => setCurrentPage(num)} />
+      <Pagination setCurrentPage={(num: number) => setCurrentPage(num)} />
     </>
   );
 }

@@ -3,13 +3,22 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectFilter } from "../redux/slices/filterSlice";
 
-function Sort({ onChangeSort }) {
+type SortProps = {
+  onChangeSort: any
+}
+
+type SortListProps = {
+  name: string,
+  techName: string,
+}
+
+const Sort: React.FC<SortProps> = ({ onChangeSort }) => {
   const dispatch = useDispatch();
   const {sortType}= useSelector(selectFilter);
-  const sortRef = React.useRef();
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   const [showPopup, setShowPopup] = React.useState(false);
-  const sortList =[{name:'популярности (сначала популярные)', techName: 'rating'},
+  const sortList: SortListProps[] =[{name:'популярности (сначала популярные)', techName: 'rating'},
     {name:'популярности (сначала непопулярные)', techName: '-rating'},
     {name:'цене (по возрастанию)', techName: 'price'},
     {name:'цене (по убыванию)', techName: '-price'},
@@ -17,13 +26,13 @@ function Sort({ onChangeSort }) {
     {name:'алфавиту (я-а)', techName: '-title'},
   ];
 
-  const clickOnSort = (obj) => {
+  const clickOnSort = (obj: SortListProps) => {
     dispatch(onChangeSort(obj));
     setShowPopup(false);
   }
 
   React.useEffect(() => {
-    let closeSortBlock = (event) => {
+    let closeSortBlock = (event: any) => {
       let arrElem = event.composedPath();
       if (!arrElem.includes(sortRef.current)) {
         setShowPopup(false);

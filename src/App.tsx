@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "./scss/app.scss";
@@ -9,7 +8,6 @@ import Cart from "./pages/Cart";
 import DetailPizza from "./pages/DetailPizza";
 import MainLayout from "./layouts/MainLayout";
 
-export const SearchContext = React.createContext();
 
 function App() {
 
