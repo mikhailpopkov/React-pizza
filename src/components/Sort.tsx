@@ -32,9 +32,9 @@ const Sort: React.FC<SortProps> = ({ onChangeSort }) => {
   }
 
   React.useEffect(() => {
-    let closeSortBlock = (event: any) => {
+    let closeSortBlock = (event: MouseEvent) => {
       let arrElem = event.composedPath();
-      if (!arrElem.includes(sortRef.current)) {
+      if (sortRef.current && !arrElem.includes(sortRef.current)) {
         setShowPopup(false);
       }
     }
@@ -68,7 +68,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort }) => {
         showPopup && <div className="sort__popup">
         <ul>
           {
-            sortList.map((obj, index) => (
+            sortList.map((obj) => (
               <li key={obj.techName} onClick={() => clickOnSort(obj)} className={sortType === obj.techName ? 'active' : ''}>
                 {obj.name}
               </li>
