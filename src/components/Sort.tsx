@@ -69,7 +69,7 @@ const Sort: React.FC<SortProps> = ({ onChangeSort }) => {
         <ul>
           {
             sortList.map((obj) => (
-              <li key={obj.techName} onClick={() => clickOnSort(obj)} className={sortType === obj.techName ? 'active' : ''}>
+              <li key={obj.techName} onClick={() => clickOnSort(obj)} className={sortType ? 'active' : ''}>
                 {obj.name}
               </li>
             ))

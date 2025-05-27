@@ -1,10 +1,20 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { RootState } from "../store";
 
+
+type FetcPizzas = {
+    categoryUrlId: string, 
+    sortUrl: string, 
+    orderUrl: string, 
+    searchUrl: string, 
+    currentPage: number, 
+}
+    
 
 export const fetchPizzas = createAsyncThunk(
     'pizzas/fetchPizzasStatus',
-    async (params) => {
+    async (params: FetcPizzas) => {
         const {categoryUrlId, sortUrl, orderUrl, searchUrl, currentPage} = params;
         
         const {data} = await axios
@@ -14,11 +24,25 @@ export const fetchPizzas = createAsyncThunk(
             ""
           )}&${orderUrl}&${searchUrl}`
         )
-      return data;
+      return data as Pizzas[];
     },
   )
 
-const initialState = {
+type Pizzas = {
+    id: string, 
+    title: string, 
+    price: number, 
+    imageUrl: string, 
+    sizes: number[], 
+    types: number[] 
+}
+
+interface PizzasSliceState {
+    items: Pizzas[],
+    status: 'loading' | 'succes' | 'error'
+}
+
+const initialState: PizzasSliceState = {
     items: [],
     status: 'loading',
 }
@@ -27,7 +51,7 @@ const pizzasSlice = createSlice({
     name: 'pizzas',
     initialState,
     reducers: {
-        setItems (state, action) {
+        setItems (state, action: PayloadAction<Pizzas[]>) {
             state.items = action.payload
         }
     },
@@ -47,7 +71,7 @@ const pizzasSlice = createSlice({
     }
 })
 
-export const selectPizzas = (state) => state.pizzas;
+export const selectPizzas = (state: RootState) => state.pizzas;
 
 export const { setItems } = pizzasSlice.actions;
 

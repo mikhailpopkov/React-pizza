@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice';
+import { addItem, CartSlice, minusItem, removeItem } from '../redux/slices/cartSlice';
 
 type CartItemProps = {id: string, title: string, price: number, imageUrl: string, count: number, type: string, size: string };
 
@@ -10,13 +10,11 @@ const CartItem: React.FC<CartItemProps> = ({id, title, price, imageUrl, count, t
     const onClickAdd = () => {
         dispath(addItem({
             id,
-        }))
+        } as CartSlice))
     }
 
     const onClickSubtract = () => {
-        dispath(minusItem({
-            id,
-        }))
+        dispath(minusItem(id))
     }
 
     const onClickRemove = () => {

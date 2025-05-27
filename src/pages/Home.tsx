@@ -1,8 +1,8 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 
-import { selectFilter, setCategoryId, setSortType } from "../redux/slices/filterSlice";
+import { Filter, selectFilter, setCategoryId, setSortType } from "../redux/slices/filterSlice";
 import { fetchPizzas, selectPizzas } from "../redux/slices/pizzasSlice";
 
 import Categories from "../components/Categories";
@@ -10,10 +10,11 @@ import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import SkeletonHome from "../components/PizzaBlock/SkeletonHome";
 import Pagination from "../components/Pagination";
+import { useAppDispatch } from "../redux/store";
 
 
 const Home: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { categoryId, sortType, searchValue } = useSelector(selectFilter);
   const {items, status} = useSelector(selectPizzas);
 
@@ -27,8 +28,8 @@ const Home: React.FC = () => {
     const sortUrl = `sortBy=${sortType.techName}`;
     const orderUrl = sortUrl.includes("-") ? `order=desc` : `order=asc`;
     const searchUrl = searchValue ? `search=${searchValue}` : "";
-    // @ts-ignore
-      dispatch(fetchPizzas({
+
+    dispatch(fetchPizzas({
         categoryUrlId,
         sortUrl,
         orderUrl,
@@ -45,7 +46,7 @@ const Home: React.FC = () => {
     <>
       <div className="content__top">
         <Categories value={categoryId} onClickCategory={(id: number) => dispatch(setCategoryId(id))} />
-        <Sort onChangeSort={(id: number) => dispatch(setSortType(id))} />
+        <Sort onChangeSort={(id: Filter) => dispatch(setSortType(id))} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {
