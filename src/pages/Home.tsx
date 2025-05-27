@@ -18,6 +18,8 @@ const Home: React.FC = () => {
   const { categoryId, sortType, searchValue } = useSelector(selectFilter);
   const {items, status} = useSelector(selectPizzas);
 
+  const onClickCategory = React.useCallback ((id: number) => dispatch(setCategoryId(id)), [])
+
   const skeletons = [...new Array(6)].map((_, index) => <SkeletonHome key={index} />);
   const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 
@@ -45,7 +47,7 @@ const Home: React.FC = () => {
   return (
     <>
       <div className="content__top">
-        <Categories value={categoryId} onClickCategory={(id: number) => dispatch(setCategoryId(id))} />
+        <Categories value={categoryId} onClickCategory={onClickCategory} />
         <Sort onChangeSort={(id: Filter) => dispatch(setSortType(id))} />
       </div>
       <h2 className="content__title">Все пиццы</h2>

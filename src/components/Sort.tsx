@@ -12,7 +12,7 @@ type SortListProps = {
   techName: string,
 }
 
-const Sort: React.FC<SortProps> = ({ onChangeSort }) => {
+const Sort: React.FC<SortProps> = React.memo(({ onChangeSort }) => {
   const dispatch = useDispatch();
   const {sortType}= useSelector(selectFilter);
   const sortRef = React.useRef<HTMLDivElement>(null);
@@ -79,6 +79,6 @@ const Sort: React.FC<SortProps> = ({ onChangeSort }) => {
       }
     </div>
   );
-}
+})
 
 export default Sort;

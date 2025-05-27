@@ -180,6 +180,22 @@ body {
       b {
         font-size: 22px;
       }
+
+      button {
+        &:disabled {
+          border-color: #787878;
+          transform: none;
+
+          svg path {
+            fill: #787878
+          }
+
+          &:hover {
+            background: transparent;
+
+          }
+        }
+      }
     }
 
     &-price {
